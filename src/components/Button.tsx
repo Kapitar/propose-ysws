@@ -14,7 +14,7 @@ const Button = ({ children, color, href }: ButtonProps) => {
   return (
     <a href={href}>
       <button
-        className={`px-4 py-2 rounded-4xl cursor-pointer text-lg font-bold ${colors[color]}`}
+        className={`px-4 py-2 rounded-4xl cursor-pointer text-lg font-bold ${colors[color]} hover:scale-105 transition`}
         type="button"
       >
         {children}
