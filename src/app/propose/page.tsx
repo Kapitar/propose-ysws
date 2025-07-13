@@ -1,96 +1,111 @@
+"use client";
+
 import Button from "@/components/Button";
 
 export default function ProposePage() {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    const response = await fetch('/api/ysws', {
+      method: 'POST',
+      body: formData
+    });
+
+    const data = await response.json()
+    console.log(data);
+  }
+
   return (
     <div className="container mx-auto">
       <h1 className="text-7xl font-bold mt-8">Propose Your Idea</h1>
       <p className="mt-4 text-xl">
         Share your innovative ideas with the community and get feedback!
       </p>
-      <form className="mt-6 gap-y-4 flex flex-col">
+      <form onSubmit={handleSubmit} className="mt-6 gap-y-4 flex flex-col">
         <div className="ysws-name">
-          <label className="text-xl" htmlFor="ysws-name">
+          <label className="text-xl" htmlFor="name">
             YSWS Program Name
           </label>
           <input
             type="text"
             className="w-full px-4 py-2 border rounded-lg text-xl"
             placeholder="Awesome YSWS Program"
-            name="ysws-name"
+            name="name"
             required
           />
         </div>
 
         <div className="grid grid-cols-2 gap-x-4">
-          <div className="ysws-ys">
-            <label className="text-xl" htmlFor="ysws-name">
+          <div className="YS">
+            <label className="text-xl" htmlFor="YS">
               What will participants build? (YS)
             </label>
             <input
               type="text"
               className="w-full px-4 py-2 border rounded-lg text-xl"
               placeholder="PCB"
-              name="ysws-ys"
+              name="YS"
               required
             />
           </div>
 
-          <div className="ysws-ws">
-            <label className="text-xl" htmlFor="ysws-name">
+          <div className="WS">
+            <label className="text-xl" htmlFor="WS">
               What will they get? (WS)
             </label>
             <input
               type="text"
               className="w-full px-4 py-2 border rounded-lg text-xl"
               placeholder="$10 to buy components"
-              name="ysws-ws"
+              name="WS"
               required
             />
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-x-4">
-          <div className="ysws-website">
-            <label className="text-xl" htmlFor="ysws-website">
+          <div className="websiteURL">
+            <label className="text-xl" htmlFor="websiteURL">
               YSWS Website Link (optional)
             </label>
             <input
               type="url"
               className="w-full px-4 py-2 border rounded-lg text-xl"
               placeholder="my-ysws.vercel.app"
-              name="ysws-website"
-              required
+              name="websiteURL"
             />
           </div>
 
-          <div className="ysws-demo">
-            <label className="text-xl" htmlFor="ysws-website">
+          <div className="demoURL">
+            <label className="text-xl" htmlFor="demoURL">
               Demo (optional)
             </label>
             <input
               type="url"
               className="w-full px-4 py-2 border rounded-lg text-xl"
               placeholder="my-ysws.vercel.app"
-              name="ysws-demo"
-              required
+              name="demoURL"
             />
           </div>
         </div>
 
-        <div className="ysws-description">
-          <label className="text-xl" htmlFor="ysws-description">
+        <div className="description">
+          <label className="text-xl" htmlFor="description">
             Describe your idea!
           </label>
           <textarea
             className="w-full px-4 py-2 border rounded-lg text-xl"
             rows={4}
             placeholder="My program is about this and this, and it is so awesome because..."
-            name="ysws-description"
+            name="description"
             required
           ></textarea>
         </div>
 
-        <Button color="red">Submit the Idea</Button>
+        <Button type="submit" color="red">
+          Submit the Idea
+        </Button>
       </form>
     </div>
   );
