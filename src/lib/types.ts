@@ -6,3 +6,9 @@ export interface YSWSProposal {
   demoURL?: string;
   websiteURL?: string;
 }
+
+export interface User {
+  name: string;
+  slackId: string;
+  email: string;
+}
