@@ -11,4 +11,5 @@ export interface User {
   name: string;
   slackId: string;
   email: string;
+  photo: string
 }

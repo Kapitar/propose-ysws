@@ -26,7 +26,8 @@ export async function createUser(user: User) {
     const createdUser = await base('Users').create({
       'Name': user.name,
       'Slack ID': user.slackId,
-      'Email': user.email
+      'Email': user.email,
+      'Photo': user.photo
     });
 
     return createdUser;
@@ -43,7 +44,7 @@ export async function getUser(slackID: string) {
       maxRecords: 1
     }).firstPage();
 
-    return user;
+    return user[0];
   } catch (error) {
     console.error('Error obtaining a user', error);
     throw new Error('Failed to get a user');
