@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     !data.get("description")
   ) {
     return NextResponse.json(
-      { error: "Missing required fields" },
+      { success: false, message: "Missing required fields" },
       { status: 400 }
     );
   }
@@ -27,5 +27,5 @@ export async function POST(request: Request) {
 
   const result = await createProposal(proposal);
 
-  return NextResponse.json(result, { status: 201 });
+  return NextResponse.json({success: true}, { status: 201 });
 }

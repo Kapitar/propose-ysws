@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
 import { useSession, signIn, signOut } from "next-auth/react";
 
+
 const Navbar = () => {
   const { data: session, status } = useSession();
-  console.log(session, status);
 
   return (
     <div className="w-full">
@@ -22,14 +22,16 @@ const Navbar = () => {
         {!session ? (
           <button
             className="hover:underline hover:decoration-wavy"
-            onClick={() => signIn("slack")}
+            onClick={() =>
+              signIn("slack", { callbackUrl: `/?login_success=true` })
+            }
           >
             Login
           </button>
         ) : (
           <button
             className="hover:underline hover:decoration-wavy"
-            onClick={() => signOut()}
+            onClick={() => signOut({ callbackUrl: `/?logout_success=true` })}
           >
             Logout
           </button>

@@ -1,23 +1,47 @@
 "use client";
 
 import Button from "@/components/Button";
+import Notification from "@/components/Notification";
+import { useState } from "react";
 
 export default function ProposePage() {
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false);
+  const [showErrorNotification, setShowErrorNotification] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
 
-    const response = await fetch('/api/ysws', {
-      method: 'POST',
-      body: formData
-    });
+    setLoading(true);
+    try {
+      const response = await fetch('/api/ysws', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await response.json()
 
-    const data = await response.json()
-    console.log(data);
+      console.log(data);
+      if (!data.success) {
+        setErrorMessage(data.error || "Failed to submit proposal");
+        setShowErrorNotification(true);
+      } else {
+        setShowSuccessNotification(true); 
+      }
+    } catch (error) {
+      setErrorMessage("An unexpected error occurred. Please try again later.");
+      setShowErrorNotification(true);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <div className="container mx-auto">
+      <Notification tracker={showSuccessNotification} type="success">You successfully submitted the YSWS Idea</Notification>
+      <Notification tracker={showErrorNotification} type="error">{errorMessage}</Notification>
+
       <h1 className="text-7xl font-bold mt-8">Propose Your Idea</h1>
       <p className="mt-4 text-xl">
         Share your innovative ideas with the community and get feedback!
@@ -104,7 +128,7 @@ export default function ProposePage() {
         </div>
 
         <Button type="submit" color="red">
-          Submit the Idea
+          {loading ? "Submitting..." : "Submit the Idea"}
         </Button>
       </form>
     </div>

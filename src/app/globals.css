@@ -3,6 +3,8 @@
 @theme {
   --color-hc-blue: #338eda;
   --color-hc-red: #ec3750;
+  --color-hc-green: #33d6a6;
+  --color-hc-orange: #ff8c37;
 }
 
 @font-face {
